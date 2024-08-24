@@ -49,7 +49,6 @@ public class ArrayStackTests
 
         int trueCount = 0;
 
-
         foreach (var item in stack)
         {
             trueCount++;

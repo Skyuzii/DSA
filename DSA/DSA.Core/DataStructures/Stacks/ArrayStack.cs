@@ -45,11 +45,18 @@ public class ArrayStack<T> : IEnumerable<T>
         if ((uint)index >= (uint)_array.Length)
         {
             throw new InvalidOperationException("Stack is empty");
-        }
+        } 
+        
+        var item = _array[index];
 
+        if (_tail * 3 <= _array.Length)
+        {
+            Resize(increase: false);
+        }
+        
         _tail = index;
 
-        return _array[index];
+        return item;
     }
     
     public void Clear()
@@ -60,7 +67,7 @@ public class ArrayStack<T> : IEnumerable<T>
 
     private void Resize(bool increase)
     {
-        var newSize = _array.Length == 0 ? 4 : increase ? _tail << 1 : _tail >> 1;
+        var newSize = _array.Length == 0 ? 4 : increase ? _array.Length << 1 : _array.Length >> 1;
         
         Array.Resize(ref _array, newSize);
     }
