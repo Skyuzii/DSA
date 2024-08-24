@@ -10,3 +10,4 @@ A personal project with implementations of data structures and algorithms, writt
 
 ### Queues:
 * [Array Queue](DSA/DSA.Core/DataStructures/Queues/ArrayQueue.cs)
+* [Linked Queue](DSA/DSA.Core/DataStructures/Queues/LinkedQueue.cs)
