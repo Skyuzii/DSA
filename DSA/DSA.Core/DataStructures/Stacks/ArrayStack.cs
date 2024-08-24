@@ -61,11 +61,6 @@ public class ArrayStack<T> : IEnumerable<T>
     private void Resize(bool increase)
     {
         var newSize = _array.Length == 0 ? 4 : increase ? _tail << 1 : _tail >> 1;
-
-        if (!increase)
-        {
-            Console.WriteLine("test");
-        }
         
         Array.Resize(ref _array, newSize);
     }
