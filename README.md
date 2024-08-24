@@ -5,8 +5,8 @@ A personal project with implementations of data structures and algorithms, writt
 ## Data Structures
 
 ### Stacks:
-* [Array Stack](DSA/DSA/DataStructures/Stacks/ArrayStack.cs)
-* [Linked Stack](DSA/DSA/DataStructures/Stacks/LinkedStack.cs)
+* [Array Stack](DSA/DSA.Core/DataStructures/Stacks/ArrayStack.cs)
+* [Linked Stack](DSA/DSA.Core/DataStructures/Stacks/LinkedStack.cs)
 
 ### Queues:
-* [Array Queue](DSA/DSA/DataStructures/Queues/ArrayQueue.cs)
+* [Array Queue](DSA/DSA.Core/DataStructures/Queues/ArrayQueue.cs)
