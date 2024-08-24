@@ -20,9 +20,7 @@ public class ArrayStack<T> : IEnumerable<T>
 
     public void Push(T item)
     {
-        var index = _tail;
-
-        if ((uint)index >= (uint)_array.Length)
+        if ((uint)_tail >= (uint)_array.Length)
         {
             Resize(increase: true);
         }
@@ -33,10 +31,10 @@ public class ArrayStack<T> : IEnumerable<T>
     public T Pop()
     {
         var index = _tail - 1;
-        
-        if ((uint)index < (uint)_array.Length)
+
+        if ((uint)index >= (uint)_array.Length)
         {
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("Stack is empty");
         }
 
         if (index * 3 <= _array.Length)
