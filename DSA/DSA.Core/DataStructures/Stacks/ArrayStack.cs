@@ -28,6 +28,16 @@ public class ArrayStack<T> : IEnumerable<T>
         _array[_tail++] = item;
     }
 
+    public T Peek()
+    {
+        if ((uint)_tail >= (uint)_array.Length)
+        {
+            throw new InvalidOperationException("Stack is empty");
+        }
+
+        return _array[_tail - 1];
+    }
+
     public T Pop()
     {
         var index = _tail - 1;
@@ -37,20 +47,26 @@ public class ArrayStack<T> : IEnumerable<T>
             throw new InvalidOperationException("Stack is empty");
         }
 
-        if (index * 3 <= _array.Length)
-        {
-            Resize(increase: false);
-        }
-
         _tail = index;
 
         return _array[index];
     }
+    
+    public void Clear()
+    {
+        _tail = 0;
+        _array = new T[4];
+    }
 
     private void Resize(bool increase)
     {
-        var newSize = increase ? _tail << 1 : _tail >> 1;
+        var newSize = _array.Length == 0 ? 4 : increase ? _tail << 1 : _tail >> 1;
 
+        if (!increase)
+        {
+            Console.WriteLine("test");
+        }
+        
         Array.Resize(ref _array, newSize);
     }
 
