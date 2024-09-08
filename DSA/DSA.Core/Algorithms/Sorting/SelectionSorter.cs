@@ -15,6 +15,10 @@ public static class SelectionSorter
     private static IList<T> SelectionSort<T>(this IList<T> list, bool isDesc)
     {
         var comparer = Comparer<T>.Default;
+
+        Func<T, T, bool> shouldSwapFunc = isDesc
+            ? (T x, T y) => comparer.Compare(x, y) < 0
+            : (T x, T y) => comparer.Compare(x, y) > 0;
         
         for (int i = 0; i < list.Count; i++)
         {
@@ -22,19 +26,9 @@ public static class SelectionSorter
 
             for (int j = i + 1; j < list.Count; j++)
             {
-                if (isDesc)
+                if (shouldSwapFunc(list[swapIndex], list[j]))
                 {
-                    if (comparer.Compare(list[swapIndex], list[j]) < 0)
-                    {
-                        swapIndex = j;
-                    }
-                }
-                else
-                {
-                    if (comparer.Compare(list[swapIndex], list[j]) > 0)
-                    {
-                        swapIndex = j;
-                    }
+                    swapIndex = j;
                 }
             }
 
