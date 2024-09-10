@@ -2,7 +2,7 @@ using DSA.Core.Algorithms.Sorting;
 
 namespace DSA.UnitTests.Algorithms.Sorting;
 
-public class MergeSorterTests
+public class MergeBUSorterTests
 {
     [Fact]
     public void SortingInAscendingOrderAndCheckingIfSorted()
@@ -28,7 +28,12 @@ public class MergeSorterTests
             }
         }
 
-        list.MergeSort();
+        // list = new List<int>
+        // {
+        //     9, 3, 0, 7, 1, 5, 2, 4
+        // };
+
+        list.MergeBUSort();
 
         var last = int.MinValue;
         foreach (var item in list)
