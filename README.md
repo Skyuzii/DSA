@@ -23,3 +23,5 @@ A personal project with implementations of data structures and algorithms, writt
 * [Insertion Sort](DSA/DSA.Core/Algorithms/Sorting/InsertionSorter.cs)
 * [Selection Sort](DSA/DSA.Core/Algorithms/Sorting/SelectionSorter.cs)
 * [Shell Sort](DSA/DSA.Core/Algorithms/Sorting/ShellSorter.cs)
+* [Merge Sort](DSA/DSA.Core/Algorithms/Sorting/MergeSorter.cs)
+* [Merge Bottom Up Sort](DSA/DSA.Core/Algorithms/Sorting/MergeBUSorter.cs)
