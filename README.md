@@ -13,6 +13,7 @@ A personal project with implementations of data structures and algorithms, writt
 * [Linked Queue](DSA/DSA.Core/DataStructures/Queues/LinkedQueue.cs)
 
 ### Heaps:
+* [Binary Min-Heap](DSA/DSA.Core/DataStructures/Heaps/BinaryMinHeap.cs)
 * [Binary Max-Heap](DSA/DSA.Core/DataStructures/Heaps/BinaryMaxHeap.cs)
 
 ### UnionFinds:

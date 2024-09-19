@@ -35,6 +35,7 @@ public class BinaryMinHeap<T> where T : IComparable<T>
     {
         var item = _data[0];
         _data[0] = _data[^1];
+        _data.RemoveAt(_data.Count - 1);
         NodeHeapifyDown();
         Count--;
         
@@ -47,7 +48,7 @@ public class BinaryMinHeap<T> where T : IComparable<T>
         {
             var parentNodeIndex = GetParentNodeIndex(nodeIndex);
 
-            if (_comparer.Compare(_data[parentNodeIndex], _data[nodeIndex]) > 0)
+            if (_comparer.Compare(_data[parentNodeIndex], _data[nodeIndex]) < 0)
             {
                 return;
             }

@@ -2,12 +2,12 @@ using DSA.Core.DataStructures.Heaps;
 
 namespace DSA.UnitTests.DataStructures.Heaps;
 
-public class BinaryMaxHeapTests
+public class BinaryMinHeapTests
 {
     [Fact]
     public void AddingElementsAndCheckingIfExtractedInSortedOrder()
     {
-        var heap = new BinaryMaxHeap<int>();
+        var heap = new BinaryMinHeap<int>();
 
         int minHeapElement = -50000;
         int maxHeapElement = 50000;
@@ -28,12 +28,12 @@ public class BinaryMaxHeapTests
         if (heap.Count != addedElements) Assert.Fail();
 
         int removedElements = 0;
-        var max = heap.Peek();
+        var min = heap.Peek();
         while (!heap.IsEmpty)
         {
-            if (max < heap.Peek()) Assert.Fail();
+            if (min > heap.Peek()) Assert.Fail();
 
-            max = heap.Pop();
+            min = heap.Pop();
             removedElements++;
         }
 
