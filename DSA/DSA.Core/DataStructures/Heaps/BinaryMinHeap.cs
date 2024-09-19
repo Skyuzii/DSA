@@ -1,6 +1,6 @@
 namespace DSA.Core.DataStructures.Heaps;
 
-public class BinaryMaxHeap<T> where T : IComparable<T>
+public class BinaryMinHeap<T> where T : IComparable<T>
 {
     private readonly List<T> _data;
     private readonly IComparer<T> _comparer;
@@ -9,11 +9,11 @@ public class BinaryMaxHeap<T> where T : IComparable<T>
 
     public bool IsEmpty => Count == 0;
 
-    public BinaryMaxHeap() : this(0)
+    public BinaryMinHeap() : this(0)
     {
     }
     
-    public BinaryMaxHeap(int capacity)
+    public BinaryMinHeap(int capacity)
     {
         _data = new List<T>(capacity);
         _comparer = Comparer<T>.Default;
@@ -35,10 +35,9 @@ public class BinaryMaxHeap<T> where T : IComparable<T>
     {
         var item = _data[0];
         _data[0] = _data[^1];
-        _data.RemoveAt(_data.Count - 1);
         NodeHeapifyDown();
         Count--;
-
+        
         return item;
     }
 
@@ -50,7 +49,7 @@ public class BinaryMaxHeap<T> where T : IComparable<T>
 
             if (_comparer.Compare(_data[parentNodeIndex], _data[nodeIndex]) > 0)
             {
-                break;
+                return;
             }
 
             (_data[parentNodeIndex], _data[nodeIndex]) = (_data[nodeIndex], _data[parentNodeIndex]);
@@ -60,37 +59,37 @@ public class BinaryMaxHeap<T> where T : IComparable<T>
 
     private void NodeHeapifyDown()
     {
-        var parentIndex = 0;
-        
+        var parentNodeIndex = 0;
+
         while (true)
         {
-            var leftNodeIndex = GetLeftNodeIndex(parentIndex);
-            var rightNodeIndex = GetRightNodeIndex(parentIndex);
+            var leftNodeIndex = GetLeftNodeIndex(parentNodeIndex);
+            var rightNodeIndex = GetRightNodeIndex(parentNodeIndex);
 
             if (leftNodeIndex >= _data.Count)
             {
-                break;
+                return;
             }
 
-            var biggestNodeIndex = parentIndex;
-            
-            if (_comparer.Compare(_data[biggestNodeIndex], _data[leftNodeIndex]) < 0)
+            var smallestNodeIndex = parentNodeIndex;
+
+            if (_comparer.Compare(_data[smallestNodeIndex], _data[leftNodeIndex]) > 0)
             {
-                biggestNodeIndex = leftNodeIndex;
-            }
-            
-            if (rightNodeIndex < _data.Count && _comparer.Compare(_data[biggestNodeIndex], _data[rightNodeIndex]) < 0)
-            {
-                biggestNodeIndex = rightNodeIndex;
+                smallestNodeIndex = leftNodeIndex;
             }
 
-            if (parentIndex == biggestNodeIndex)
+            if (rightNodeIndex < _data.Count && _comparer.Compare(_data[smallestNodeIndex], _data[rightNodeIndex]) > 0)
             {
-                break;
+                smallestNodeIndex = rightNodeIndex;
             }
 
-            (_data[parentIndex], _data[biggestNodeIndex]) = (_data[biggestNodeIndex], _data[parentIndex]);
-            parentIndex = biggestNodeIndex;
+            if (parentNodeIndex == smallestNodeIndex)
+            {
+                return;
+            }
+
+            (_data[parentNodeIndex], _data[smallestNodeIndex]) = (_data[smallestNodeIndex], _data[parentNodeIndex]);
+            parentNodeIndex = smallestNodeIndex;
         }
     }
 
@@ -103,7 +102,7 @@ public class BinaryMaxHeap<T> where T : IComparable<T>
     {
         return parentNodeIndex * 2 + 1;
     }
-    
+
     private int GetRightNodeIndex(int parentNodeIndex)
     {
         return parentNodeIndex * 2 + 2;
