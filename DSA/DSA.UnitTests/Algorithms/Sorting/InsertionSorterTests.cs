@@ -13,10 +13,7 @@ public class InsertionSorterTests
         int maxElement = 3000;
 
         int addedElements = 0;
-
-        //Adding every seventh number, then every fifth number,
-        //every third and at last all numbers
-        //NOTE: some items are added more than once
+        
         for (int i = 7; i > 0; i -= 2)
         {
             int el = minElement;

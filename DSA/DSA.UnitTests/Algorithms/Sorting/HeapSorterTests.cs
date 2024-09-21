@@ -2,15 +2,15 @@ using DSA.Core.Algorithms.Sorting;
 
 namespace DSA.UnitTests.Algorithms.Sorting;
 
-public class MergeBUSorterTests
+public class HeapSorterTests
 {
     [Fact]
     public void SortingInAscendingOrderAndCheckingIfSorted()
     {
         var list = new List<int>();
 
-        int minElement = -10000;
-        int maxElement = 10000;
+        int minElement = -50000;
+        int maxElement = 50000;
 
         int addedElements = 0;
         
@@ -25,12 +25,7 @@ public class MergeBUSorterTests
             }
         }
 
-        // list = new List<int>
-        // {
-        //     9, 3, 0, 7, 1, 5, 2, 4
-        // };
-
-        list.MergeBUSort();
+        list.HeapSort();
 
         var last = int.MinValue;
         foreach (var item in list)
