@@ -1,4 +1,5 @@
 using DSA.Core.Algorithms.Sorting;
+using DSA.UnitTests.Extensions;
 
 namespace DSA.UnitTests.Algorithms.Sorting;
 
@@ -7,23 +8,10 @@ public class MergeSorterTests
     [Fact]
     public void SortingInAscendingOrderAndCheckingIfSorted()
     {
-        var list = new List<int>();
-
         int minElement = -10000;
         int maxElement = 10000;
-
-        int addedElements = 0;
         
-        for (int i = 7; i > 0; i -= 2)
-        {
-            int el = minElement;
-            while (el <= maxElement)
-            {
-                list.Add(el);
-                addedElements++;
-                el += i;
-            }
-        }
+        var list = Enumerable.Range(minElement, maxElement - minElement).Shuffle().ToList();
 
         list.MergeSort();
 

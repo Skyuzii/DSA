@@ -1,4 +1,5 @@
 using DSA.Core.DataStructures.Heaps;
+using DSA.UnitTests.Extensions;
 
 namespace DSA.UnitTests.DataStructures.Heaps;
 
@@ -11,21 +12,15 @@ public class BinaryMaxHeapTests
 
         int minHeapElement = -50000;
         int maxHeapElement = 50000;
+        
+        var list = Enumerable.Range(minHeapElement, maxHeapElement - minHeapElement).Shuffle().ToList();
 
-        int addedElements = 0;
-
-        for (int i = 7; i > 0; i -= 2)
+        foreach (var item in list)
         {
-            int el = minHeapElement;
-            while (el <= maxHeapElement)
-            {
-                heap.Push(el);
-                addedElements++;
-                el += i;
-            }
+            heap.Push(item);
         }
 
-        if (heap.Count != addedElements) Assert.Fail();
+        if (heap.Count != list.Count) Assert.Fail();
 
         int removedElements = 0;
         var max = heap.Peek();
@@ -39,6 +34,6 @@ public class BinaryMaxHeapTests
 
         Assert.True(heap.IsEmpty);
         Assert.Equal(0, heap.Count);
-        Assert.Equal(addedElements, removedElements);
+        Assert.Equal(list.Count, removedElements);
     }
 }
