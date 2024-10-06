@@ -7,6 +7,8 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
     private Node? _root;
     private readonly IComparer<TKey> _comparer;
 
+    public int Count => _root?.Count ?? 0;
+    
     public BinarySearchTree()
     {
         _comparer = Comparer<TKey>.Default;
@@ -172,6 +174,21 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
 
         return (node.Key, node.Value);
     }
+    
+    private Node? GetMinInternal(Node? node)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+
+        while (node.Left is not null)
+        {
+            node = node.Left;
+        }
+
+        return node;
+    }
 
     public void DeleteMin()
     {
@@ -231,6 +248,52 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
         }
 
         node.Right = DeleteMaxInternal(node.Right);
+        node.Count = 1 + Size(node.Left) + Size(node.Right);
+
+        return node;
+    }
+
+    public void Delete(TKey key)
+    {
+        _root = DeleteInternal(key, _root);
+    }
+
+    private Node? DeleteInternal(TKey key, Node? node)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+
+        var cmp = _comparer.Compare(key, node.Key);
+
+        if (cmp < 0)
+        {
+            node.Left = DeleteInternal(key, node.Left);
+        }
+        else if (cmp > 0)
+        {
+            node.Right = DeleteInternal(key, node.Right);
+        }
+        else
+        {
+            if (node.Left is null)
+            {
+                return node.Right;
+            }
+
+            if (node.Right is null)
+            {
+                return node.Left;
+            }
+
+            var parent = node;
+
+            node = GetMinInternal(parent.Right);
+            node.Right = DeleteMinInternal(parent.Right);
+            node.Left = parent.Left;
+        }
+
         node.Count = 1 + Size(node.Left) + Size(node.Right);
 
         return node;

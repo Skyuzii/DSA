@@ -184,4 +184,48 @@ public class BinarySearchTreeTests
 
         Assert.DoesNotContain(tree, x => x.Item1 == maxElement);
     }
+    
+    [Fact]
+    public void Delete()
+    {
+        BinarySearchTree<int, int> tree = new BinarySearchTree<int, int>();
+
+        int minElement = 0;
+        int maxElement = 100;
+
+        var data = Enumerable.Range(minElement, maxElement + 1).Shuffle().ToList();
+
+        foreach (var item in data)
+        {
+            tree.Insert(item, item);
+        }
+
+        tree.Delete(data[50]);
+
+        Assert.Equal(maxElement, tree.Count);
+        Assert.DoesNotContain(tree, x => x.Item1 == data[50]);
+    }
+    
+    [Fact]
+    public void DeleteAllExceptOne()
+    {
+        BinarySearchTree<int, int> tree = new BinarySearchTree<int, int>();
+
+        int minElement = 0;
+        int maxElement = 100;
+
+        var data = Enumerable.Range(minElement, maxElement + 1).Shuffle().ToList();
+
+        foreach (var item in data)
+        {
+            tree.Insert(item, item);
+        }
+
+        for (int i = 0; i < maxElement; i++)
+        {
+            tree.Delete(data[i]);
+        }
+
+        Assert.Equal(1, tree.Count);
+    }
 }
