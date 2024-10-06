@@ -6,8 +6,6 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
 {
     private Node? _root;
     private readonly IComparer<TKey> _comparer;
-    
-    public int Count { get; private set; }
 
     public BinarySearchTree()
     {
@@ -56,50 +54,44 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
 
     public void Insert(TKey key, TValue value)
     {
-        var newNode = new Node(key, value);
+        _root = InsertInternal(_root, key, value);
+    }
 
-        if (_root is null)
+    private Node InsertInternal(Node? node, TKey key, TValue value)
+    {
+        if (node is null)
         {
-            _root = newNode;
-            Count++;
-            return;
+            return new Node(key, value);
         }
 
-        var node = _root;
+        var cmp = _comparer.Compare(key, node.Key);
 
-        while (node is not null)
+        if (cmp < 0)
         {
-            var cmp = _comparer.Compare(key, node.Key);
-
-            if (cmp == 0)
-            {
-                node.Value = value;
-                return;
-            }
-
-            if (cmp < 0)
-            {
-                if (node.Left is null)
-                {
-                    node.Left = newNode;
-                    Count++;
-                    return;
-                }
-
-                node = node.Left;
-            }
-            else
-            {
-                if (node.Right is null)
-                {
-                    node.Right = newNode;
-                    Count++;
-                    return;
-                }
-
-                node = node.Right;
-            }
+            node.Left = InsertInternal(node.Left, key, value);
         }
+        else if (cmp > 0)
+        {
+            node.Right = InsertInternal(node.Right, key, value);
+        }
+        else
+        {
+            node.Value = value;
+        }
+
+        node.Count = 1 + Size(node.Left) + Size(node.Right);
+
+        return node;
+    }
+
+    private int Size(Node? node)
+    {
+        if (node is null)
+        {
+            return 0;
+        }
+
+        return node.Count;
     }
 
     public TValue? Floor(TKey key)
@@ -164,7 +156,7 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
             : ceilingNode.Value;
     }
 
-    public (TKey, TValue)? Min()
+    public (TKey, TValue)? GetMin()
     {
         if (_root is null)
         {
@@ -180,8 +172,31 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
 
         return (node.Key, node.Value);
     }
+
+    public void DeleteMin()
+    {
+        _root = DeleteMinInternal(_root);
+    }
+
+    private Node? DeleteMinInternal(Node? node)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+        
+        if (node.Left is null)
+        {
+            return node.Right;
+        }
+
+        node.Left = DeleteMinInternal(node.Left);
+        node.Count = 1 + Size(node.Left) + Size(node.Right);
+
+        return node;
+    }
     
-    public (TKey, TValue)? Max()
+    public (TKey, TValue)? GetMax()
     {
         if (_root is null)
         {
@@ -198,6 +213,29 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
         return (node.Key, node.Value);
     }
 
+    public void DeleteMax()
+    {
+        _root = DeleteMaxInternal(_root);
+    }
+
+    private Node? DeleteMaxInternal(Node? node)
+    {
+        if (node is null)
+        {
+            return null;
+        }
+
+        if (node.Right is null)
+        {
+            return node.Left;
+        }
+
+        node.Right = DeleteMaxInternal(node.Right);
+        node.Count = 1 + Size(node.Left) + Size(node.Right);
+
+        return node;
+    }
+
     private class Node
     {
         public TKey Key { get; set; }
@@ -207,11 +245,14 @@ public class BinarySearchTree<TKey, TValue> : IEnumerable<(TKey, TValue)> where 
         public Node? Left { get; set; }
         
         public Node? Right { get; set; }
+        
+        public int Count { get; set; }
 
         public Node(TKey key, TValue value)
         {
             Key = key;
             Value = value;
+            Count = 1;
         }
     }
     

@@ -76,7 +76,7 @@ public class BinarySearchTreeTests
             tree.Insert(item, item);
         }
 
-        var minElementByTree = tree.Min();
+        var minElementByTree = tree.GetMin();
 
         Assert.Equal(minElement, minElementByTree!.Value.Item1);
     }
@@ -96,7 +96,7 @@ public class BinarySearchTreeTests
             tree.Insert(item, item);
         }
 
-        var maxElementByTree = tree.Max();
+        var maxElementByTree = tree.GetMax();
 
         Assert.Equal(maxElement, maxElementByTree!.Value.Item1);
     }
@@ -143,5 +143,45 @@ public class BinarySearchTreeTests
         var ceilingElement = tree.Ceiling(10);
 
         Assert.Equal(expected: 11, ceilingElement);
+    }
+    
+    [Fact]
+    public void DeleteMin()
+    {
+        BinarySearchTree<int, int> tree = new BinarySearchTree<int, int>();
+
+        int minElement = 0;
+        int maxElement = 100;
+
+        var data = Enumerable.Range(minElement, maxElement + 1).Shuffle().ToList();
+
+        foreach (var item in data)
+        {
+            tree.Insert(item, item);
+        }
+
+        tree.DeleteMin();
+
+        Assert.DoesNotContain(tree, x => x.Item1 == minElement);
+    }
+    
+    [Fact]
+    public void DeleteMax()
+    {
+        BinarySearchTree<int, int> tree = new BinarySearchTree<int, int>();
+
+        int minElement = 0;
+        int maxElement = 100;
+
+        var data = Enumerable.Range(minElement, maxElement + 1).Shuffle().ToList();
+
+        foreach (var item in data)
+        {
+            tree.Insert(item, item);
+        }
+
+        tree.DeleteMax();
+
+        Assert.DoesNotContain(tree, x => x.Item1 == maxElement);
     }
 }
