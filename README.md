@@ -17,7 +17,8 @@ A personal project with implementations of data structures and algorithms, writt
 * [Binary Max-Heap](DSA/DSA.Core/DataStructures/Heaps/BinaryMaxHeap.cs)
 
 ### Trees:
-* [Binary Search Tree](DSA/DSA.Core/DataStructures//Trees/BinarySearchTree.cs)
+* [Binary Search Tree](DSA/DSA.Core/DataStructures/Trees/BinarySearchTree.cs)
+* [Red-Black Tree](DSA/DSA.Core/DataStructures/Trees/RedBlackTree.cs)
 
 ### UnionFinds:
 * [Quick Find UF](DSA/DSA.Core/DataStructures/UnionFinds/QuickFindUf.cs)
